@@ -16,4 +16,4 @@ defines an interface for creating an object, but lets subclasses decide which cl
 Ensures a class has only one instance, and provides a global point of access to it.
 
 ## Command:
-Encapsulates a request as an object, thereby letting you parameterize other objects with different requests, queue or log requests, and support undoable operations
+Encapsulates a request as an object, thereby letting you parameterize other objects with different requests, queue or log requests, and support undoable operations.
