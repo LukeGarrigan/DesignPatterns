@@ -1,11 +1,14 @@
 package com.company;
 
+import Commands.CeilingFanCommands.CeilingFanHighCommand;
+import Commands.CeilingFanCommands.CeilingFanLowCommand;
 import Commands.CeilingFanCommands.CeilingFanOffCommand;
-import Commands.CeilingFanCommands.CeilingFanOnCommand;
+import Commands.Command;
 import Commands.GarageDoorCommands.GarageDoorDownCommand;
 import Commands.GarageDoorCommands.GarageDoorUpCommand;
 import Commands.LightCommands.LightOffCommand;
 import Commands.LightCommands.LightOnCommand;
+import Commands.MacroCommand;
 import Commands.StereoCommands.StereoOffCommand;
 import Commands.StereoCommands.StereoOnWithCDCommand;
 import Devices.CeilingFan;
@@ -20,47 +23,73 @@ public class Main {
 
         RemoteControl remoteControl = new RemoteControl();
 
+        /*
         Light livingRoomLight = new Light("Living room");
         Light kitchenLight = new Light("Kitchen");
         CeilingFan ceilingFan = new CeilingFan("Living room");
         GarageDoor garageDoor = new GarageDoor();
         Stereo stereo = new Stereo();
 
-        // creating all the light command objects
-        LightOnCommand livingRoomLightOn = new LightOnCommand(livingRoomLight);
-        LightOffCommand livingRoomLightOff = new LightOffCommand(livingRoomLight);
-        LightOnCommand kitchenLightOn = new LightOnCommand(kitchenLight);
-        LightOffCommand kitchenLightOff = new LightOffCommand(kitchenLight);
-
-        // creating the fan command objects
-        CeilingFanOnCommand ceilingFanOn = new CeilingFanOnCommand(ceilingFan);
-        CeilingFanOffCommand ceilingFanOff = new CeilingFanOffCommand(ceilingFan);
-
-        // creating the garage up and down command objects
-        GarageDoorUpCommand garageDoorUp = new GarageDoorUpCommand(garageDoor);
-        GarageDoorDownCommand garageDoorDown = new GarageDoorDownCommand(garageDoor);
-
-        // stereo on and off command objects
-        StereoOnWithCDCommand stereoOnWithCD = new StereoOnWithCDCommand(stereo);
-        StereoOffCommand stereoOff = new StereoOffCommand(stereo);
-
-
-
-        remoteControl.setCommand(0, livingRoomLightOn, livingRoomLightOff);
-        remoteControl.setCommand(1, kitchenLightOn, kitchenLightOff);
-        remoteControl.setCommand(2, ceilingFanOn, ceilingFanOff);
-        remoteControl.setCommand(3, stereoOnWithCD, stereoOff);
+        CeilingFanLowCommand ceilingFanLowCommand = new CeilingFanLowCommand(ceilingFan);
+        CeilingFanHighCommand ceilingFanHighCommand = new CeilingFanHighCommand(ceilingFan);
+        CeilingFanOffCommand ceilingFanOffCommand = new CeilingFanOffCommand(ceilingFan);
+        remoteControl.setCommand(0,ceilingFanLowCommand , ceilingFanOffCommand);
+        remoteControl.setCommand(1, ceilingFanHighCommand, ceilingFanOffCommand);
 
         System.out.println(remoteControl);
 
         remoteControl.onButtonWasPushed(0);
         remoteControl.offButtonWasPushed(0);
+        remoteControl.undoButtonWasPushed();
         remoteControl.onButtonWasPushed(1);
-        remoteControl.offButtonWasPushed(1);
-        remoteControl.onButtonWasPushed(2);
-        remoteControl.offButtonWasPushed(2);
-        remoteControl.onButtonWasPushed(3);
-        remoteControl.offButtonWasPushed(3);
+        remoteControl.undoButtonWasPushed();
+        */
+
+        // code for the macro command
+
+        macroCommand();
+    }
+
+    public static void macroCommand(){
+
+        RemoteControl remote = new RemoteControl();
+        Light light = new Light("living room");
+        GarageDoor garageDoor = new GarageDoor();
+        Stereo stereo = new Stereo();
+
+
+        // on commands
+        LightOnCommand lightOnCommand = new LightOnCommand(light);
+        GarageDoorUpCommand garageDoorUpCommand = new GarageDoorUpCommand(garageDoor);
+        StereoOnWithCDCommand stereoOnWithCDCommand = new StereoOnWithCDCommand(stereo);
+
+        // off commands
+        LightOffCommand lightOffCommand = new LightOffCommand(light);
+        GarageDoorDownCommand garageDoorDownCommand = new GarageDoorDownCommand(garageDoor);
+        StereoOffCommand stereoOffCommand = new StereoOffCommand(stereo);
+
+
+        Command[] macroOn = {lightOnCommand, garageDoorUpCommand, stereoOnWithCDCommand};
+        Command[] macroOff = {lightOffCommand, garageDoorDownCommand, stereoOffCommand};
+
+        MacroCommand macroOnCommand = new MacroCommand(macroOn);
+        MacroCommand macroOffCommand = new MacroCommand(macroOff);
+        // assigning the buggers to the remote
+        remote.setCommand(0, macroOnCommand, macroOffCommand);
+
+        System.out.println("----pushing on----");
+        remote.onButtonWasPushed(0);
+        System.out.println("----pushing off----");
+        remote.offButtonWasPushed(0);
+        System.out.println("---undoing---");
+        remote.undoButtonWasPushed();
+
+
+
+
+
+
+
 
     }
 }
