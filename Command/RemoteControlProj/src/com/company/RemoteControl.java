@@ -15,8 +15,9 @@ public class RemoteControl {
 
         Command noCommand = new NoCommand();
         for(int i=0; i< 7; i++){
-            onCommands[i] =noCommand;
-            offCommands[i] =noCommand;
+
+            onCommands[i] = () -> {};
+            offCommands[i] = () -> {};
         }
         undoCommand = noCommand;
 
@@ -38,10 +39,11 @@ public class RemoteControl {
         undoCommand = offCommands[slot];
     }
 
+    /*
     public void undoButtonWasPushed(){
         undoCommand.undo();
     }
-
+*/
     public String toString(){
 
         StringBuffer stringBuff = new StringBuffer();

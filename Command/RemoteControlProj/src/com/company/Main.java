@@ -21,33 +21,49 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
+
+        //macroCommand();
+
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~");
+        commandsWithLamdas();
+
+
+    }
+
+    public static void commandsWithLamdas(){
         RemoteControl remoteControl = new RemoteControl();
 
-        /*
         Light livingRoomLight = new Light("Living room");
-        Light kitchenLight = new Light("Kitchen");
-        CeilingFan ceilingFan = new CeilingFan("Living room");
-        GarageDoor garageDoor = new GarageDoor();
+        Light bedroomLight = new Light("Bedroom");
         Stereo stereo = new Stereo();
+        GarageDoor garageDoor = new GarageDoor();
 
-        CeilingFanLowCommand ceilingFanLowCommand = new CeilingFanLowCommand(ceilingFan);
-        CeilingFanHighCommand ceilingFanHighCommand = new CeilingFanHighCommand(ceilingFan);
-        CeilingFanOffCommand ceilingFanOffCommand = new CeilingFanOffCommand(ceilingFan);
-        remoteControl.setCommand(0,ceilingFanLowCommand , ceilingFanOffCommand);
-        remoteControl.setCommand(1, ceilingFanHighCommand, ceilingFanOffCommand);
+
+        remoteControl.setCommand(0, livingRoomLight::on, livingRoomLight::off);
+        remoteControl.setCommand(1, bedroomLight::on, bedroomLight::off);
+
+        Command stereoOnWithCD = () -> {
+            stereo.on();
+            stereo.setCd();
+            stereo.setVolume(10);
+        };
+
+        remoteControl.setCommand(2, stereoOnWithCD, stereo::off);
+        remoteControl.setCommand(3, garageDoor::up, garageDoor::down);
+
 
         System.out.println(remoteControl);
 
         remoteControl.onButtonWasPushed(0);
         remoteControl.offButtonWasPushed(0);
-        remoteControl.undoButtonWasPushed();
         remoteControl.onButtonWasPushed(1);
-        remoteControl.undoButtonWasPushed();
-        */
+        remoteControl.offButtonWasPushed(1);
+        remoteControl.onButtonWasPushed(2);
+        remoteControl.offButtonWasPushed(2);
+        remoteControl.onButtonWasPushed(3);
+        remoteControl.offButtonWasPushed(3);
 
-        // code for the macro command
-
-        macroCommand();
     }
 
     public static void macroCommand(){
@@ -82,7 +98,7 @@ public class Main {
         System.out.println("----pushing off----");
         remote.offButtonWasPushed(0);
         System.out.println("---undoing---");
-        remote.undoButtonWasPushed();
+        //remote.undoButtonWasPushed();
 
 
 
